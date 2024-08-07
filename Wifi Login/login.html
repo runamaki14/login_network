@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="pragma" content="no-cache" />
+<meta http-equiv="expires" content="-1" />
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;"/>
+<title>technicchan hotspot > login</title>
+<link href='FileForWebsite/css/bootstrap.min.css' rel='stylesheet'>
+<link href='FileForWebsite/css/all.css' rel='stylesheet'>
+<link rel="stylesheet" type="text/css" href="styles.css">
+<script type="text/javascript" src="/md5.js"></script>
+<script type="text/javascript" src="FileForWebsite/js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="FileForWebsite/js/bootstrap.bundle.min.js"></script>
+</head>
+
+<body>
+$(if chap-id)
+<form name="sendin" action="$(link-login-only)" method="post">
+    <input type="hidden" name="username" />
+    <input type="hidden" name="password" />
+    <input type="hidden" name="dst" value="$(link-orig)" />
+    <input type="hidden" name="popup" value="true" />
+</form>
+<script type="text/javascript">
+    function doLogin() {
+        document.sendin.username.value = document.login.username.value;
+        document.sendin.password.value = hexMD5('$(chap-id)' + document.login.password.value + '$(chap-challenge)');
+        document.sendin.submit();
+        return false;
+    }
+</script>
+$(endif)
+
+<img src="FileForWebsite/img/logo_technichan.png" alt="" class="LogoTechnichan">
+<div class="wrapper">
+    <div class="logo">
+        <img src="FileForWebsite/img/logo_team.jpg" alt="">
+    </div>
+    <div class="text-center mt-4 name">
+        Technicchan WiFi
+    </div>
+    <div class="pls">กรุณาล็อกอินเพื่อเข้าใช้ระบบอินเตอร์เน็ต</div>
+    <form name="login" action="$(link-login-only)" method="post" $(if chap-id) onSubmit="return doLogin()" $(endif) class="p-3 mt-3">
+        <input type="hidden" name="dst" value="$(link-orig)" />
+        <input type="hidden" name="popup" value="true" />
+        <div class="form-field d-flex align-items-center">
+            <span class="far fa-user"></span>
+            <input type="text" name="username" id="userName" placeholder="Username" value="$(username)">
+        </div>
+        <div class="form-field d-flex align-items-center">
+            <span class="fas fa-key"></span>
+            <input type="password" name="password" id="pwd" placeholder="Password">
+        </div>
+        <button class="btn">Login</button>
+    </form>
+    <div class="text-center fs-6">
+        $(if trial == 'yes')Free trial available, <a style="color: #FF8080" href="$(link-login-only)?dst=$(link-orig-esc)&username=T-$(mac-esc)">click here</a>.$(endif)
+    </div>
+    $(if error)<br /><div style="color: #FF8080; font-size: 9px">$(error)</div>$(endif)
+</div>
+
+<script type="text/javascript">
+    document.login.username.focus();
+</script>
+</body>
+</html>
